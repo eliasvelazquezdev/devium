@@ -1,5 +1,5 @@
 from django.db import models
-from apps.users.models import CustomUser 
+from blog.apps.users.models import CustomUser 
 
 # Create your models here.
 class Post(models.Model):
@@ -23,5 +23,6 @@ class Comment(models.Model):
     post = models.ForeignKey(Post, related_name='comments', on_delete=models.CASCADE)
     author = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
     content = models.TextField()
-    
+    published = models.DateTimeField(auto_now_add=True)
+    updated = models.DateTimeField(auto_now_add=True)
 

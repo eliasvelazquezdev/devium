@@ -16,7 +16,7 @@ class CustomUser(AbstractUser):
     objects = CustomUserManager()
 
     def __str__(self):
-        return f'{self.email} | {self.first_name} + {self.last_name}'
+        return f'{self.email} | {self.first_name} {self.last_name}'
     
     @property
     def avatar_url(self):
