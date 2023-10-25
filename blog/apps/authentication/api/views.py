@@ -3,6 +3,8 @@ from django.contrib.auth import get_user_model, authenticate, login, logout
 from rest_framework import status
 from rest_framework.response import Response
 from rest_framework.views import APIView
+from rest_framework.generics import CreateAPIView
+from blog.apps.users.api.serializers import UserSerializer
 
 # Create your views here
 class LoginView(APIView):
@@ -26,3 +28,6 @@ class LogoutView(APIView):
         logout(request)
 
         return Response({"logout" : "success"}, status=status.HTTP_200_OK)
+
+class SignUpView(CreateAPIView):
+    serializer_class = UserSerializer
