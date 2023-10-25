@@ -5,8 +5,8 @@ from blog.apps.blogging.models import Post
 User = get_user_model()
 
 class UserSerializer(serializers.ModelSerializer):
-    posts = serializers.PrimaryKeyRelatedField(many=True, queryset=Post.objects.all())
+    posts = serializers.StringRelatedField(many=True, read_only=True)
 
     class Meta:
         model = User
-        fields = '__all__'
+        fields = ['email', 'first_name', 'last_name', 'about', 'posts', 'date_joined']

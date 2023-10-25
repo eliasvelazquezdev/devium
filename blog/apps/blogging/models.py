@@ -7,8 +7,8 @@ class Post(models.Model):
     content = models.TextField()
     published = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now_add=True)
-    author = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
-    tag = models.ManyToManyField("Tag",related_name="tags", verbose_name="Tags", blank=True, null=True, default='general')
+    author = models.ForeignKey(CustomUser, related_name='posts', on_delete=models.CASCADE)
+    tag = models.ManyToManyField("Tag", related_name="tags", verbose_name="Tags", blank=True, null=True, default='general')
 
     def __str__(self):
         return self.title
