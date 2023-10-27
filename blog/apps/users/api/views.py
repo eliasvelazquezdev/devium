@@ -5,7 +5,7 @@ from rest_framework.response import Response
 from rest_framework import permissions
 from rest_framework.views import APIView
 from .serializers import UserSerializer
-from .permissions import IsOwner
+from .permissions import IsAccountOwner, IsAccountOwnerOrAdminUser
 
 # Create your views here.
 User = get_user_model()
@@ -21,7 +21,7 @@ class UserDetail(generics.RetrieveAPIView):
 class UserUpdate(generics.UpdateAPIView):
     permission_classes = [
         permissions.IsAuthenticated, 
-        IsOwner,
+        IsAccountOwner,
     ]
 
     queryset = User.objects.all()
@@ -30,7 +30,7 @@ class UserUpdate(generics.UpdateAPIView):
 class UserDelete(generics.DestroyAPIView):
     permission_classes = [
         permissions.IsAuthenticated,
-        permissions.IsAdminUser,
+        IsAccountOwnerOrAdminUser,
     ]
 
     queryset = User.objects.all()
