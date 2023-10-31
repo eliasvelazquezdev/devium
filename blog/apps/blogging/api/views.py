@@ -1,8 +1,8 @@
 from django.shortcuts import render
 from rest_framework import generics
 from rest_framework import permissions
-from ..models import Post, Tag, Comment
-from .serializers import PostListSerializer, PostCreateSerializer, PostDetailSerializer, TagSerializer, CommentSerializer
+from ..models import Post, Tag
+from .serializers import PostListSerializer, PostCreateSerializer, PostDetailSerializer, TagListSerializer
 from .permissions import IsAuthorOrReadOnly
 
 # Create your views here.
@@ -30,3 +30,7 @@ class PostDetailView(generics.RetrieveUpdateDestroyAPIView):
 
     queryset = Post.objects.all()
     serializer_class = PostDetailSerializer
+
+class TagsListView(generics.ListAPIView):
+    queryset = Tag.objects.all()
+    serializer_class = TagListSerializer

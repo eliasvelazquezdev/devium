@@ -11,14 +11,25 @@ class CommentSerializer(serializers.ModelSerializer):
         model = Comment
         fields = '__all__'
 
-
 class PostListSerializer(serializers.ModelSerializer):
     author = serializers.StringRelatedField(read_only=True)
     tags = serializers.StringRelatedField(many=True, read_only=True)
     class Meta:
         model = Post
         fields = ['id', 'title', 'content', 'published', 'updated', 'author', 'tags']
+class PostHyperLinkedSerializer(serializers.HyperlinkedModelSerializer):
+    author = serializers.StringRelatedField(read_only=True)
+    class Meta:
+        model = Post
+        fields = ['url', 'id', 'title', 'author', 'published', 'updated']
 
+class PostDetailSerializer(serializers.ModelSerializer):
+    author = serializers.StringRelatedField(read_only=True)
+    tags = serializers.StringRelatedField(many=True, read_only=True)
+    comments = serializers.StringRelatedField(many=True, read_only=True)
+    class Meta:
+        model = Post
+        fields = ['id', 'title', 'content', 'published', 'updated', 'author', 'tags', 'comments']
 class PostCreateSerializer(serializers.ModelSerializer):
     tags = TagSerializer(many=True)
     
@@ -33,10 +44,9 @@ class PostCreateSerializer(serializers.ModelSerializer):
             post.tags.add(Tag.objects.create(**tag_data))
         post.save()
         return post
-class PostDetailSerializer(serializers.ModelSerializer):
-    author = serializers.StringRelatedField(read_only=True)
-    tags = serializers.StringRelatedField(many=True, read_only=True)
-    comments = serializers.StringRelatedField(many=True, read_only=True)
+
+class TagListSerializer(serializers.ModelSerializer):
+    posts = PostHyperLinkedSerializer(many=True, read_only=True, source='tags')
     class Meta:
-        model = Post
-        fields = ['id', 'title', 'content', 'published', 'updated', 'author', 'tags', 'comments']
+        model = Tag
+        fields = ('name', 'posts')
