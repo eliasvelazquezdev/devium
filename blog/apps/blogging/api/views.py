@@ -2,7 +2,7 @@ from django.shortcuts import render
 from rest_framework import generics
 from rest_framework import permissions
 from ..models import Post, Tag
-from .serializers import PostListSerializer, PostCreateSerializer, PostDetailSerializer, TagListSerializer
+from .serializers import PostListSerializer, PostCreateSerializer, PostDetailSerializer, PostUpdateSerializer, TagListSerializer
 from .permissions import IsAuthorOrReadOnly
 
 # Create your views here.
@@ -10,6 +10,15 @@ class PostListView(generics.ListAPIView):
 
     queryset = Post.objects.all()
     serializer_class = PostListSerializer
+
+class PostDetailView(generics.RetrieveDestroyAPIView):
+    permission_classes = [
+        permissions.IsAuthenticatedOrReadOnly, 
+        IsAuthorOrReadOnly,
+    ]
+
+    queryset = Post.objects.all()
+    serializer_class = PostDetailSerializer
 
 class PostCreateView(generics.CreateAPIView):
     permission_classes = [
@@ -22,14 +31,15 @@ class PostCreateView(generics.CreateAPIView):
     def perform_create(self, serializer):
         serializer.save(author=self.request.user)
 
-class PostDetailView(generics.RetrieveUpdateDestroyAPIView):
+class PostUpdateView(generics.RetrieveUpdateAPIView):
     permission_classes = [
-        permissions.IsAuthenticatedOrReadOnly, 
-        IsAuthorOrReadOnly,
+        permissions.IsAuthenticated,
+        IsAuthorOrReadOnly, 
     ]
 
     queryset = Post.objects.all()
-    serializer_class = PostDetailSerializer
+    serializer_class = PostUpdateSerializer
+
 
 class TagsListView(generics.ListAPIView):
     queryset = Tag.objects.all()
