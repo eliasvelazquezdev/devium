@@ -24,7 +24,6 @@ class PostHyperLinkedSerializer(serializers.HyperlinkedModelSerializer):
 class PostDetailSerializer(serializers.ModelSerializer):
     author = serializers.StringRelatedField(read_only=True)
     tags = serializers.StringRelatedField(many=True, read_only=True)
-    comments = serializers.StringRelatedField(many=True, read_only=True)
     class Meta:
         model = Post
         fields = ['id', 'title', 'content', 'published', 'updated', 'author', 'tags']

@@ -5,6 +5,7 @@ Django==4.2.6
 django-environ==0.11.2
 djangorestframework==3.14.0
 djangorestframework-versioning==2.1.0
+drf-link-header-pagination==0.2.0
 packaging==23.2
 pytz==2023.3.post1
 six==1.16.0
