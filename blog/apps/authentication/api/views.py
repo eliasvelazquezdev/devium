@@ -4,7 +4,7 @@ from rest_framework import status
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework.generics import CreateAPIView
-from blog.apps.users.api.serializers import UserSerializer
+from blog.apps.users.api.serializers import UserCreateUpdateSerializer
 
 # Create your views here
 class LoginView(APIView):
@@ -30,4 +30,4 @@ class LogoutView(APIView):
         return Response({"logout" : "success"}, status=status.HTTP_200_OK)
 
 class SignUpView(CreateAPIView):
-    serializer_class = UserSerializer
+    serializer_class = UserCreateUpdateSerializer

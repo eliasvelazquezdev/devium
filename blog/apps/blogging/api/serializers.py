@@ -6,11 +6,6 @@ class TagSerializer(serializers.ModelSerializer):
         model = Tag
         fields = ('name',)
 
-class CommentSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Comment
-        fields = '__all__'
-
 class PostListSerializer(serializers.ModelSerializer):
     author = serializers.StringRelatedField(read_only=True)
     tags = serializers.StringRelatedField(many=True, read_only=True)
@@ -18,6 +13,9 @@ class PostListSerializer(serializers.ModelSerializer):
         model = Post
         fields = ['id', 'title', 'content', 'published', 'updated', 'author', 'tags']
 class PostHyperLinkedSerializer(serializers.HyperlinkedModelSerializer):
+    """
+    Serializer that will return Post instances with hyperlinks to every instance in the response
+    """
     author = serializers.StringRelatedField(read_only=True)
     class Meta:
         model = Post
@@ -29,7 +27,7 @@ class PostDetailSerializer(serializers.ModelSerializer):
     comments = serializers.StringRelatedField(many=True, read_only=True)
     class Meta:
         model = Post
-        fields = ['id', 'title', 'content', 'published', 'updated', 'author', 'tags', 'comments']
+        fields = ['id', 'title', 'content', 'published', 'updated', 'author', 'tags']
 class PostCreateSerializer(serializers.ModelSerializer):
     tags = TagSerializer(many=True)
     
@@ -46,6 +44,9 @@ class PostCreateSerializer(serializers.ModelSerializer):
         return post
 
 class TagListSerializer(serializers.ModelSerializer):
+    """
+    Serializer that returns a listing of tags and hyperlinks to every post related to a single tag
+    """
     posts = PostHyperLinkedSerializer(many=True, read_only=True, source='tags')
     class Meta:
         model = Tag
