@@ -16,7 +16,7 @@ class UserListSerializer(serializers.ModelSerializer):
         }
 
 class UserDetailSerializer(serializers.ModelSerializer):
-    posts = PostHyperLinkedSerializer(many=True, read_only=True, source='posts')
+    posts = PostHyperLinkedSerializer(many=True, read_only=True)
 
     class Meta:
         model = User
