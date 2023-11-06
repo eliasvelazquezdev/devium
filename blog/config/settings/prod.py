@@ -1,6 +1,8 @@
 from .base import *
 import dj_database_url
 
+ALLOWED_HOSTS = env('ALLOWED_HOSTS').split(',')
+
 DATABASES = {
     'default': dj_database_url.config(
         default = env('DATABASE_URL')
