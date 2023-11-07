@@ -7,7 +7,7 @@ Powered by an API written in Django REST Framework, users can create their accou
 * Users can read articles anonymously
 * Users can access a list of tags (categories) and articles related to each tag
 * Users can register an account and login on the platform using an email and a password
-* Registered users and access to their account details and edit them
+* Registered users can access to their account details and edit them
 * Registered users can create articles and edit / delete them
 * Tags can also be created during article creation
 * Admin users can delete users accounts
